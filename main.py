@@ -3,10 +3,19 @@ from fastapi import FastAPI
 import pandas as pd
 from pydantic import BaseModel, Field 
 from typing import Literal
+from fastapi.middleware.cors import CORSMiddleware
 
 model = joblib.load('mental_health_model.pkl')
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 top_countries = ['Other','India','USA','Canada','Australia','UK','Germany','Turkey','Mexico','France']
 
