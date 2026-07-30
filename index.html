@@ -499,8 +499,9 @@
         <div class="modal-card">
             <h3 id="aboutTitle" class="modal-title">About SentiMind</h3>
             <div class="modal-body">
-                <p>SentiMind was designed to offer a calm, non-judgmental space for students to reflect on their digital routines. In a hyper-connected world, digital fatigue, overstimulation, and screen routines frequently influence our internal focus and well-being.</p>
-                <p>This program evaluates 12 demographic and lifestyle features using a localized machine learning pipeline. It compares your daily configurations to academic datasets to calculate a balance score. Rather than diagnosing or labeling you, SentiMind aims to spark self-awareness and suggest soft, incremental adaptations to protect your energy and time.</p>
+                <p>SentiMind was designed to offer a calm, non-judgmental space for students to reflect on their digital routines. In a hyper-connected world, digital fatigue and screen routines frequently influence our internal focus and well-being.</p>
+                <p>To precisely calculate your digital well-being score, SentiMind uses a **Random Forest Regressor** machine learning model. This model evaluates 12 key features covering your demographics (age, gender, academic level, and country), digital routine (most used platform, primary purpose, daily usage hours, and device unlocks), and lifestyle habits (study, sleep, exercise hours, and self-perceived stress level).</p>
+                <p>The model functions by aggregating predictions from an ensemble of decision trees, capturing complex and non-linear interactions between screen time, sleep quality, and physical activity. By parsing these inputs through standard preprocessing transformers and applying regression analysis, the algorithm projects a balance score out of 10 that reflects your overall routine alignment with healthy well-being profiles.</p>
             </div>
             <button class="btn btn-secondary close-modal" aria-label="Close dialog">Close Dialog</button>
         </div>
