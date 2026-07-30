@@ -1075,6 +1075,17 @@ footer {
     font-size: 0.9rem;
 }
 
+.crisis-content a {
+    color: var(--terracotta-dark);
+    text-decoration: underline;
+    font-weight: 700;
+    transition: var(--transition-fast);
+}
+
+.crisis-content a:hover {
+    color: var(--terracotta);
+}
+
 /* Re-styled soft toast notification alert */
 .toast {
     position: fixed;
