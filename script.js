@@ -4,16 +4,17 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // API Endpoint Detection
-    const getApiUrl = () => {
+    const getApiUrls = () => {
         // If running from local file protocol or served on a different port than the backend
         if (window.location.protocol === 'file:' || 
             window.location.hostname === 'localhost' || 
             window.location.hostname === '127.0.0.1') {
-            if (window.location.port !== '8001') {
-                return 'http://127.0.0.1:8001/predict';
-            }
+            return [
+                'http://127.0.0.1:8000/predict',
+                'http://127.0.0.1:8001/predict'
+            ];
         }
-        return '/predict';
+        return ['/predict'];
     };
 
     // DOM Elements
@@ -449,53 +450,72 @@ document.addEventListener('DOMContentLoaded', () => {
             Stress_Level: formData.get('Stress_Level')
         };
 
-        const apiUrl = getApiUrl();
+        const apiUrls = getApiUrls();
         
-        // Execute Inference Request
-        fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        })
-        .then(async (response) => {
-            if (!response.ok) {
-                let errDetails = `Server returned status code ${response.status}`;
-                try {
-                    const errData = await response.json();
-                    if (errData && errData.detail) {
-                        if (Array.isArray(errData.detail)) {
-                            errDetails = errData.detail.map(d => `${d.loc.join('.')}: ${d.msg}`).join(', ');
-                        } else {
-                            errDetails = errData.detail;
-                        }
-                    }
-                } catch(e) {}
-                throw new Error(errDetails);
+        const performInference = (urlIndex = 0) => {
+            if (urlIndex >= apiUrls.length) {
+                handleErrorDisplay(new Error('Failed to connect to the prediction server. Please verify that the backend is running locally at http://127.0.0.1:8000 or http://127.0.0.1:8001'));
+                return;
             }
-            return response.json();
-        })
-        .then((data) => {
-            // Success response
+
+            const currentUrl = apiUrls[urlIndex];
+            
+            fetch(currentUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(async (response) => {
+                if (!response.ok) {
+                    let errDetails = `Server returned status code ${response.status}`;
+                    try {
+                        const errData = await response.json();
+                        if (errData && errData.detail) {
+                            if (Array.isArray(errData.detail)) {
+                                errDetails = errData.detail.map(d => `${d.loc.join('.')}: ${d.msg}`).join(', ');
+                            } else {
+                                errDetails = errData.detail;
+                            }
+                        }
+                    } catch(e) {}
+                    throw new Error(errDetails);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                // Success response
+                setTimeout(() => {
+                    apiLoader.classList.add('hidden');
+                    apiResultCard.classList.remove('hidden');
+                    renderResults(data.Predicted_Mental_Health_Score);
+                    showToast('Analysis Completed', 'SentiMind AI has generated your personal well-being metrics.', true);
+                }, 800);
+            })
+            .catch((error) => {
+                // Connection/fetch failover
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError') || error.message === 'Failed to fetch') {
+                    console.warn(`Connection failed to ${currentUrl}. Trying next fallback URL if available...`);
+                    performInference(urlIndex + 1);
+                } else {
+                    handleErrorDisplay(error);
+                }
+            });
+        };
+
+        const handleErrorDisplay = (error) => {
             setTimeout(() => {
                 apiLoader.classList.add('hidden');
-                apiResultCard.classList.remove('hidden');
-                renderResults(data.Predicted_Mental_Health_Score);
-                showToast('Analysis Completed', 'SentiMind AI has generated your personal well-being metrics.', true);
-            }, 800); // Small delay to guarantee visual feedback of loading state
-        })
-        .catch((error) => {
-            // Handle network and server errors
-            setTimeout(() => {
-                apiLoader.classList.add('hidden');
-                errorMessage.textContent = error.message.includes('Failed to fetch') 
-                    ? 'Failed to connect to the prediction server. Please verify that the backend is running locally at http://127.0.0.1:8001'
+                errorMessage.textContent = error.message.includes('Failed to fetch') || error.message.includes('connect to the prediction server')
+                    ? 'Failed to connect to the prediction server. Please verify that the backend is running locally at http://127.0.0.1:8000 or http://127.0.0.1:8001'
                     : `Error: ${error.message}`;
                 apiErrorCard.classList.remove('hidden');
                 showToast('Inference Error', 'SentiMind failed to compute the prediction score.', false);
             }, 800);
-        });
+        };
+
+        performInference(0);
     });
 
     // Retry and Reset bindings
