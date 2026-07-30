@@ -5,10 +5,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // API Endpoint Detection
     const getApiUrl = () => {
-        // If frontend is served on a different port/protocol from the backend (localhost:8000)
+        // If frontend is served on a different port/protocol from the backend (localhost:8001)
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            if (window.location.port !== '8000') {
-                return 'http://127.0.0.1:8000/predict';
+            if (window.location.port !== '8001') {
+                return 'http://127.0.0.1:8001/predict';
             }
         }
         return '/predict';
