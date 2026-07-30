@@ -5,16 +5,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     // API Endpoint Detection
     const getApiUrls = () => {
-        // If running from local file protocol or served on a different port than the backend
-        if (window.location.protocol === 'file:' || 
-            window.location.hostname === 'localhost' || 
-            window.location.hostname === '127.0.0.1') {
-            return [
-                'http://127.0.0.1:8000/predict',
-                'http://127.0.0.1:8001/predict'
-            ];
-        }
-        return ['/predict'];
+        return [
+            'https://mental-health-predictor-1-j81o.onrender.com/predict',
+            'http://127.0.0.1:8000/predict',
+            'http://127.0.0.1:8001/predict'
+        ];
     };
 
     // DOM Elements
@@ -454,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const performInference = (urlIndex = 0) => {
             if (urlIndex >= apiUrls.length) {
-                handleErrorDisplay(new Error('Failed to connect to the prediction server. Please verify that the backend is running locally at http://127.0.0.1:8000 or http://127.0.0.1:8001'));
+                handleErrorDisplay(new Error('Failed to connect to the prediction server. Please verify that the backend is running at https://mental-health-predictor-1-j81o.onrender.com'));
                 return;
             }
 
@@ -508,7 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 apiLoader.classList.add('hidden');
                 errorMessage.textContent = error.message.includes('Failed to fetch') || error.message.includes('connect to the prediction server')
-                    ? 'We couldn\'t connect to the analytical server. Please ensure the backend is running locally.'
+                    ? 'We couldn\'t connect to the analytical server. Please check your internet connection or verify the server is running at https://mental-health-predictor-1-j81o.onrender.com'
                     : `Error: ${error.message}`;
                 apiErrorCard.classList.remove('hidden');
                 showToast('A brief connection issue', 'We couldn\'t reach the server. Let\'s try again in a moment.', false);
