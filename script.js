@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!isValid) {
-            showToast('Form Error', 'Please correct the highlighed fields before proceeding.', false);
+            showToast('Just a gentle check', 'Please review the highlighted section so we can proceed together.', false);
         }
 
         return isValid;
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!isValid) {
-            showToast('Form Error', 'Please fill in all social media habits fields.', false);
+            showToast('Just a gentle check', 'Please share a bit more about your social media habits before we continue.', false);
         }
 
         return isValid;
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const stressChecked = document.querySelector('input[name="Stress_Level"]:checked');
         if (!stressChecked) {
             document.getElementById('stressError').parentElement.classList.add('invalid');
-            showToast('Form Error', 'Please select a stress level.', false);
+            showToast('Just a gentle check', 'Please select how you perceive your stress level to help us check in.', false);
             return false;
         } else {
             document.getElementById('stressError').parentElement.classList.remove('invalid');
@@ -323,14 +323,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let badgeText, title, desc, tips, theme;
 
         if (score >= 7.5) {
-            badgeText = "Excellent Well-being";
-            title = "Digital Flourishing";
-            desc = "Your social media usage and lifestyle inputs indicate a highly balanced, positive mental state with strong boundaries.";
+            badgeText = "Harmonious Balance";
+            title = "Mindful Connection";
+            desc = "Your daily routine shows a healthy, active balance between screen time and personal wellness.";
             theme = {
-                color1: '#10b981', // green
-                color2: '#059669',
-                bg: 'rgba(16, 185, 129, 0.15)',
-                glow: 'rgba(16, 185, 129, 0.25)',
+                color1: '#7c9a7c', // Sage green
+                color2: '#4a614a',
+                bg: 'rgba(124, 154, 124, 0.12)',
+                glow: 'rgba(124, 154, 124, 0.15)',
                 class: 'excel-theme'
             };
             tips = [
@@ -339,14 +339,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 "Foster this resilience by engaging in screen-free outdoor activities and offline social circles."
             ];
         } else if (score >= 6.5) {
-            badgeText = "Good / Balanced";
-            title = "Moderate Balance";
-            desc = "You maintain a reasonably healthy relationship with digital platforms, but minor tweaks can optimize your well-being.";
+            badgeText = "Steady Routine";
+            title = "Balanced Flow";
+            desc = "You maintain a stable footing with digital platforms, though small adjustments can help protect your energy.";
             theme = {
-                color1: '#06b6d4', // cyan
-                color2: '#0891b2',
-                bg: 'rgba(6, 182, 212, 0.15)',
-                glow: 'rgba(6, 182, 212, 0.25)',
+                color1: '#8ca28c', // Soft slate sage
+                color2: '#5c735c',
+                bg: 'rgba(140, 162, 140, 0.12)',
+                glow: 'rgba(140, 162, 140, 0.15)',
                 class: 'good-theme'
             };
             tips = [
@@ -355,14 +355,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 "Establish a 'digital curfew'—turn off alerts 30 minutes before sleep to optimize sleep depth."
             ];
         } else if (score >= 5.5) {
-            badgeText = "Moderate Stress";
-            title = "Digital Fatigue";
-            desc = "Your inputs show elevated social media interaction or sub-optimal daily habits. Minor digital exhaustion is present.";
+            badgeText = "Slight Overload";
+            title = "Overstimulated Balance";
+            desc = "Your routine indicates that screen time or daily habits might be draining your reserve energy. A quick pause could help.";
             theme = {
-                color1: '#f59e0b', // orange
-                color2: '#d97706',
-                bg: 'rgba(245, 158, 11, 0.15)',
-                glow: 'rgba(245, 158, 11, 0.25)',
+                color1: '#cfa080', // Warm sand / terracotta
+                color2: '#9f6a4a',
+                bg: 'rgba(207, 160, 128, 0.12)',
+                glow: 'rgba(207, 160, 128, 0.15)',
                 class: 'mod-theme'
             };
             tips = [
@@ -371,14 +371,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 "Integrate stress management protocols like deep breathing, journaling, or short walks during stress spikes."
             ];
         } else {
-            badgeText = "High Stress / Risk";
+            badgeText = "Heavy Overload";
             title = "Digital Exhaustion";
-            desc = "Your patterns indicate potential risk of digital burn-out, high stress levels, or sleep deprivation due to screen dependency.";
+            desc = "Your habits suggest a heavy reliance on digital platforms that may be compounding your stress levels or disrupting your sleep.";
             theme = {
-                color1: '#ef4444', // red
-                color2: '#dc2626',
-                bg: 'rgba(239, 68, 68, 0.15)',
-                glow: 'rgba(239, 68, 68, 0.25)',
+                color1: '#d98a6c', // Soft terracotta
+                color2: '#b06345',
+                bg: 'rgba(217, 138, 108, 0.12)',
+                glow: 'rgba(217, 138, 108, 0.15)',
                 class: 'risk-theme'
             };
             tips = [
@@ -490,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     apiLoader.classList.add('hidden');
                     apiResultCard.classList.remove('hidden');
                     renderResults(data.Predicted_Mental_Health_Score);
-                    showToast('Analysis Completed', 'SentiMind AI has generated your personal well-being metrics.', true);
+                    showToast('Thank you for sharing', 'Your digital well-being reflection is ready.', true);
                 }, 800);
             })
             .catch((error) => {
@@ -508,10 +508,10 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 apiLoader.classList.add('hidden');
                 errorMessage.textContent = error.message.includes('Failed to fetch') || error.message.includes('connect to the prediction server')
-                    ? 'Failed to connect to the prediction server. Please verify that the backend is running locally at http://127.0.0.1:8000 or http://127.0.0.1:8001'
+                    ? 'We couldn\'t connect to the analytical server. Please ensure the backend is running locally.'
                     : `Error: ${error.message}`;
                 apiErrorCard.classList.remove('hidden');
-                showToast('Inference Error', 'SentiMind failed to compute the prediction score.', false);
+                showToast('A brief connection issue', 'We couldn\'t reach the server. Let\'s try again in a moment.', false);
             }, 800);
         };
 
@@ -558,19 +558,61 @@ document.addEventListener('DOMContentLoaded', () => {
     btnShare.addEventListener('click', () => {
         const score = scoreVal.textContent;
         const badge = statusBadge.textContent;
-        const text = `SentiMind AI predicted my Mental Health Well-being Score as ${score}/10 (${badge}) based on my digital habits. Take your own analysis here!`;
+        const text = `SentiMind predicted my digital well-being reflection score as ${score}/10 (${badge}). Reflect on your own patterns here!`;
         
         if (navigator.clipboard) {
             navigator.clipboard.writeText(text)
                 .then(() => {
-                    showToast('Copied to Clipboard', 'Your results summary has been copied!', true);
+                    showToast('Reflections Copied', 'Your reflection summary has been copied so you can save it.', true);
                 })
                 .catch(() => {
-                    showToast('Sharing Failed', 'Could not copy automatically.', false);
+                    showToast('Copy failed', 'We could not copy the link automatically.', false);
                 });
         } else {
-            showToast('Sharing Not Supported', 'Clipboard writing is not supported by your browser.', false);
+            showToast('Not supported', 'Your browser does not support copying automatically.', false);
         }
+    });
+
+    // Floating Quick Exit key listener (Escape)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            window.location.href = 'https://weather.com';
+        }
+    });
+
+    const quickExitBtn = document.getElementById('quickExitBtn');
+    if (quickExitBtn) {
+        quickExitBtn.addEventListener('click', () => {
+            window.location.href = 'https://weather.com';
+        });
+    }
+
+    // Modal triggers for About and Privacy
+    const aboutLink = document.getElementById('aboutLink');
+    const privacyLink = document.getElementById('privacyLink');
+    const aboutModal = document.getElementById('aboutModal');
+    const privacyModal = document.getElementById('privacyModal');
+    const closeModals = document.querySelectorAll('.close-modal');
+
+    if (aboutLink && aboutModal) {
+        aboutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            aboutModal.classList.remove('hidden');
+        });
+    }
+
+    if (privacyLink && privacyModal) {
+        privacyLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            privacyModal.classList.remove('hidden');
+        });
+    }
+
+    closeModals.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (aboutModal) aboutModal.classList.add('hidden');
+            if (privacyModal) privacyModal.classList.add('hidden');
+        });
     });
 
     // Toast notification controller
@@ -583,7 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isSuccess) {
             toastIcon.className = 'fa-solid fa-circle-check toast-icon success';
         } else {
-            toastIcon.className = 'fa-solid fa-triangle-exclamation toast-icon';
+            toastIcon.className = 'fa-solid fa-circle-info toast-icon';
         }
 
         toast.classList.add('show');
