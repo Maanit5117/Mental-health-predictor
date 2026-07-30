@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SentiMind - Student Mental Health & Social Media Predictor</title>
+    <meta name="description" content="Predict and analyze the impact of social media and daily habits on student mental health using AI.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styling -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Glow Elements -->
+    <div class="blob-bg blob-1"></div>
+    <div class="blob-bg blob-2"></div>
+    <div class="blob-bg blob-3"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <i class="fa-solid fa-brain-circuit brain-icon"></i>
+                <span class="logo-text">Senti<span class="gradient-text">Mind</span></span>
+            </div>
+            <p class="subtitle">AI-Powered Social Media & Mental Health Impact Analyzer</p>
+        </header>
+
+        <!-- Main Card -->
+        <main class="glass-card">
+            <!-- Progress Bar / Step Indicator -->
+            <div class="step-indicator-container">
+                <div class="progress-line">
+                    <div class="progress-line-fill" id="progressLineFill"></div>
+                </div>
+                <div class="step-node active" data-step="1" id="stepNode1">
+                    <div class="step-number"><i class="fa-solid fa-user"></i></div>
+                    <span class="step-label">Profile</span>
+                </div>
+                <div class="step-node" data-step="2" id="stepNode2">
+                    <div class="step-number"><i class="fa-solid fa-hashtag"></i></div>
+                    <span class="step-label">Digital Habits</span>
+                </div>
+                <div class="step-node" data-step="3" id="stepNode3">
+                    <div class="step-number"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <span class="step-label">Lifestyle</span>
+                </div>
+                <div class="step-node" data-step="4" id="stepNode4">
+                    <div class="step-number"><i class="fa-solid fa-chart-simple"></i></div>
+                    <span class="step-label">Result</span>
+                </div>
+            </div>
+
+            <!-- Forms Container -->
+            <form id="predictionForm" novalidate>
+                <!-- STEP 1: Profile & Demographics -->
+                <div class="form-step active-step" id="step1">
+                    <h2 class="section-title">Tell us about yourself</h2>
+                    <p class="section-desc">We use these details to baseline predictions based on demographic trends.</p>
+
+                    <div class="input-grid">
+                        <!-- Age -->
+                        <div class="form-group">
+                            <label for="age"><i class="fa-solid fa-calendar-days"></i> Age</label>
+                            <input type="number" id="age" name="Age" min="10" max="100" placeholder="e.g. 20" required>
+                            <span class="validation-message" id="ageError">Age must be between 10 and 100</span>
+                        </div>
+
+                        <!-- Country -->
+                        <div class="form-group">
+                            <label for="country"><i class="fa-solid fa-earth-americas"></i> Country</label>
+                            <select id="country" name="Country" required>
+                                <option value="" disabled selected>Select your country</option>
+                                <option value="India">India</option>
+                                <option value="USA">USA</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Australia">Australia</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="Germany">Germany</option>
+                                <option value="Turkey">Turkey</option>
+                                <option value="Mexico">Mexico</option>
+                                <option value="France">France</option>
+                                <option value="Other">Other Country</option>
+                            </select>
+                            <span class="validation-message" id="countryError">Please select a country</span>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="form-group col-span-2">
+                            <label><i class="fa-solid fa-venus-mars"></i> Gender</label>
+                            <div class="button-selector-grid">
+                                <label class="selector-option">
+                                    <input type="radio" name="Gender" value="Male" required>
+                                    <div class="selector-card">
+                                        <i class="fa-solid fa-mars gender-icon male"></i>
+                                        <span>Male</span>
+                                    </div>
+                                </label>
+                                <label class="selector-option">
+                                    <input type="radio" name="Gender" value="Female" required>
+                                    <div class="selector-card">
+                                        <i class="fa-solid fa-venus gender-icon female"></i>
+                                        <span>Female</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <span class="validation-message" id="genderError">Please select your gender</span>
+                        </div>
+
+                        <!-- Academic Level -->
+                        <div class="form-group col-span-2">
+                            <label><i class="fa-solid fa-graduation-cap"></i> Academic Level</label>
+                            <div class="button-selector-grid grid-4">
+                                <label class="selector-option">
+                                    <input type="radio" name="Academic_Level" value="High School" required>
+                                    <div class="selector-card compact">
+                                        <span>High School</span>
+                                    </div>
+                                </label>
+                                <label class="selector-option">
+                                    <input type="radio" name="Academic_Level" value="Undergraduate" required>
+                                    <div class="selector-card compact">
+                                        <span>Undergraduate</span>
+                                    </div>
+                                </label>
+                                <label class="selector-option">
+                                    <input type="radio" name="Academic_Level" value="Graduate" required>
+                                    <div class="selector-card compact">
+                                        <span>Graduate</span>
+                                    </div>
+                                </label>
+                                <label class="selector-option">
+                                    <input type="radio" name="Academic_Level" value="Postgraduate" required>
+                                    <div class="selector-card compact">
+                                        <span>Postgraduate</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <span class="validation-message" id="academicError">Please select your academic level</span>
+                        </div>
+                    </div>
+
+                    <div class="button-row">
+                        <button type="button" class="btn btn-primary" id="btnNext1">
+                            Continue <i class="fa-solid fa-arrow-right-long"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Digital / Social Media Habits -->
+                <div class="form-step" id="step2">
+                    <h2 class="section-title">Your Digital Footprint</h2>
+                    <p class="section-desc">Let's look at how you engage with social media platforms daily.</p>
+
+                    <div class="input-grid">
+                        <!-- Most Used Platform -->
+                        <div class="form-group col-span-2">
+                            <label><i class="fa-solid fa-mobile-screen-button"></i> Most Used Platform</label>
+                            <div class="platform-selector-grid">
+                                <label class="platform-option">
+                                    <input type="radio" name="Most_Used_Platform" value="Instagram" required>
+                                    <div class="platform-card" data-platform="instagram">
+                                        <i class="fa-brands fa-instagram"></i>
+                                        <span>Instagram</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option">
+                                    <input type="radio" name="Most_Used_Platform" value="YouTube" required>
+                                    <div class="platform-card" data-platform="youtube">
+                                        <i class="fa-brands fa-youtube"></i>
+                                        <span>YouTube</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option">
+                                    <input type="radio" name="Most_Used_Platform" value="TikTok" required>
+                                    <div class="platform-card" data-platform="tiktok">
+                                        <i class="fa-brands fa-tiktok"></i>
+                                        <span>TikTok</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option">
+                                    <input type="radio" name="Most_Used_Platform" value="WhatsApp" required>
+                                    <div class="platform-card" data-platform="whatsapp">
+                                        <i class="fa-brands fa-whatsapp"></i>
+                                        <span>WhatsApp</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option">
+                                    <input type="radio" name="Most_Used_Platform" value="Facebook" required>
+                                    <div class="platform-card" data-platform="facebook">
+                                        <i class="fa-brands fa-facebook"></i>
+                                        <span>Facebook</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option">
+                                    <input type="radio" name="Most_Used_Platform" value="Twitter" required>
+                                    <div class="platform-card" data-platform="twitter">
+                                        <i class="fa-brands fa-x-twitter"></i>
+                                        <span>Twitter</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option">
+                                    <input type="radio" name="Most_Used_Platform" value="Snapchat" required>
+                                    <div class="platform-card" data-platform="snapchat">
+                                        <i class="fa-brands fa-snapchat"></i>
+                                        <span>Snapchat</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option">
+                                    <input type="radio" name="Most_Used_Platform" value="LinkedIn" required>
+                                    <div class="platform-card" data-platform="linkedin">
+                                        <i class="fa-brands fa-linkedin"></i>
+                                        <span>LinkedIn</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option">
+                                    <input type="radio" name="Most_Used_Platform" value="WeChat" required>
+                                    <div class="platform-card" data-platform="wechat">
+                                        <i class="fa-brands fa-weixin"></i>
+                                        <span>WeChat</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option flex-hide" id="optLine">
+                                    <input type="radio" name="Most_Used_Platform" value="LINE">
+                                    <div class="platform-card" data-platform="line">
+                                        <i class="fa-brands fa-line"></i>
+                                        <span>LINE</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option flex-hide" id="optKakao">
+                                    <input type="radio" name="Most_Used_Platform" value="KakaoTalk">
+                                    <div class="platform-card" data-platform="kakao">
+                                        <i class="fa-solid fa-comment-sms"></i>
+                                        <span>KakaoTalk</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option flex-hide" id="optVK">
+                                    <input type="radio" name="Most_Used_Platform" value="VKontakte">
+                                    <div class="platform-card" data-platform="vk">
+                                        <i class="fa-brands fa-vk"></i>
+                                        <span>VK</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="show-more-platforms" id="btnShowMorePlatforms">
+                                <span>Show all options</span> <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <span class="validation-message" id="platformError">Please select your most used platform</span>
+                        </div>
+
+                        <!-- Purpose of Use -->
+                        <div class="form-group col-span-2">
+                            <label><i class="fa-solid fa-compass"></i> Primary Purpose of Social Media Use</label>
+                            <div class="button-selector-grid grid-4">
+                                <label class="selector-option">
+                                    <input type="radio" name="Purpose_Of_Use" value="Networking" required>
+                                    <div class="selector-card compact">
+                                        <i class="fa-solid fa-people-arrows"></i>
+                                        <span>Networking</span>
+                                    </div>
+                                </label>
+                                <label class="selector-option">
+                                    <input type="radio" name="Purpose_Of_Use" value="Education" required>
+                                    <div class="selector-card compact">
+                                        <i class="fa-solid fa-book-open-reader"></i>
+                                        <span>Education</span>
+                                    </div>
+                                </label>
+                                <label class="selector-option">
+                                    <input type="radio" name="Purpose_Of_Use" value="Entertainment" required>
+                                    <div class="selector-card compact">
+                                        <i class="fa-solid fa-gamepad"></i>
+                                        <span>Entertainment</span>
+                                    </div>
+                                </label>
+                                <label class="selector-option">
+                                    <input type="radio" name="Purpose_Of_Use" value="News" required>
+                                    <div class="selector-card compact">
+                                        <i class="fa-solid fa-newspaper"></i>
+                                        <span>News</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <span class="validation-message" id="purposeError">Please select your primary purpose of use</span>
+                        </div>
+
+                        <!-- Avg Daily Usage Hours -->
+                        <div class="form-group">
+                            <div class="label-with-value">
+                                <label for="dailyUsage"><i class="fa-regular fa-clock"></i> Daily Usage (Hours)</label>
+                                <span class="slider-value" id="dailyUsageVal">4.0 hrs</span>
+                            </div>
+                            <input type="range" id="dailyUsage" name="Avg_Daily_Usage_Hours" min="0.0" max="24.0" step="0.5" value="4.0" required>
+                            <span class="validation-message" id="usageError">Must be between 0 and 24 hours</span>
+                        </div>
+
+                        <!-- Daily Unlocks -->
+                        <div class="form-group">
+                            <label for="unlocks"><i class="fa-solid fa-lock-open"></i> Daily Phone Unlocks</label>
+                            <input type="number" id="unlocks" name="Daily_Unlocks" min="0" placeholder="e.g. 80" required>
+                            <span class="validation-message" id="unlocksError">Please enter a valid count (>= 0)</span>
+                        </div>
+                    </div>
+
+                    <div class="button-row">
+                        <button type="button" class="btn btn-secondary" id="btnBack2">
+                            <i class="fa-solid fa-arrow-left-long"></i> Back
+                        </button>
+                        <button type="button" class="btn btn-primary" id="btnNext2">
+                            Continue <i class="fa-solid fa-arrow-right-long"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Lifestyle & Stress -->
+                <div class="form-step" id="step3">
+                    <h2 class="section-title">Lifestyle & Well-being</h2>
+                    <p class="section-desc">Balance is key. Let us know how your daily time is distributed.</p>
+
+                    <div class="input-grid">
+                        <!-- Study Hours -->
+                        <div class="form-group">
+                            <div class="label-with-value">
+                                <label for="studyHours"><i class="fa-solid fa-book"></i> Study Hours / Day</label>
+                                <span class="slider-value" id="studyHoursVal">3.0 hrs</span>
+                            </div>
+                            <input type="range" id="studyHours" name="Study_Hours" min="0.0" max="24.0" step="0.5" value="3.0" required>
+                            <span class="validation-message" id="studyError">Must be between 0 and 24 hours</span>
+                        </div>
+
+                        <!-- Sleep Hours -->
+                        <div class="form-group">
+                            <div class="label-with-value">
+                                <label for="sleepHours"><i class="fa-solid fa-bed"></i> Sleep Hours / Night</label>
+                                <span class="slider-value" id="sleepHoursVal">7.0 hrs</span>
+                            </div>
+                            <input type="range" id="sleepHours" name="Sleep_Hours_Per_Night" min="0.0" max="24.0" step="0.5" value="7.0" required>
+                            <span class="validation-message" id="sleepError">Must be between 0 and 24 hours</span>
+                        </div>
+
+                        <!-- Physical Activity Hours -->
+                        <div class="form-group">
+                            <div class="label-with-value">
+                                <label for="activityHours"><i class="fa-solid fa-dumbbell"></i> Exercise / Day (Hours)</label>
+                                <span class="slider-value" id="activityHoursVal">1.0 hrs</span>
+                            </div>
+                            <input type="range" id="activityHours" name="Physical_Activity_Hours" min="0.0" max="24.0" step="0.5" value="1.0" required>
+                            <span class="validation-message" id="activityError">Must be between 0 and 24 hours</span>
+                        </div>
+
+                        <!-- Stress Level -->
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-gauge-high"></i> Self-perceived Stress Level</label>
+                            <div class="stress-selector-bar">
+                                <label class="stress-option">
+                                    <input type="radio" name="Stress_Level" value="Low" required>
+                                    <div class="stress-card stress-low">
+                                        <span>Low</span>
+                                    </div>
+                                </label>
+                                <label class="stress-option">
+                                    <input type="radio" name="Stress_Level" value="Medium" required>
+                                    <div class="stress-card stress-medium">
+                                        <span>Medium</span>
+                                    </div>
+                                </label>
+                                <label class="stress-option">
+                                    <input type="radio" name="Stress_Level" value="High" required>
+                                    <div class="stress-card stress-high">
+                                        <span>High</span>
+                                    </div>
+                                </label>
+                                <label class="stress-option">
+                                    <input type="radio" name="Stress_Level" value="Very High" required>
+                                    <div class="stress-card stress-very-high">
+                                        <span>Very High</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <span class="validation-message" id="stressError">Please select your current stress level</span>
+                        </div>
+                    </div>
+
+                    <div class="button-row">
+                        <button type="button" class="btn btn-secondary" id="btnBack3">
+                            <i class="fa-solid fa-arrow-left-long"></i> Back
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-submit" id="btnSubmit">
+                            Analyze Well-being <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Loader & Result Display -->
+                <div class="form-step result-step" id="step4">
+                    <!-- LOADING STATE -->
+                    <div class="loader-container" id="apiLoader">
+                        <div class="pulse-ring"></div>
+                        <div class="spinner">
+                            <div class="double-bounce1"></div>
+                            <div class="double-bounce2"></div>
+                        </div>
+                        <p class="loading-text">Analyzing digital behaviors...</p>
+                        <p class="loading-subtext">SentiMind AI is running predictive inference on your profile</p>
+                    </div>
+
+                    <!-- ERROR STATE -->
+                    <div class="error-container hidden" id="apiErrorCard">
+                        <div class="error-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <h3>Prediction Failed</h3>
+                        <p class="error-message" id="errorMessage">Unable to connect to the prediction server. Please make sure the backend is running.</p>
+                        <button type="button" class="btn btn-secondary" id="btnRetry">
+                            <i class="fa-solid fa-arrow-rotate-left"></i> Try Again
+                        </button>
+                    </div>
+
+                    <!-- RESULT STATE -->
+                    <div class="result-container hidden" id="apiResultCard">
+                        <div class="result-header">
+                            <h2 class="result-title">Your Mental Health Score</h2>
+                            <p class="result-subtitle text-muted">Predicted using random forest regression model</p>
+                        </div>
+
+                        <div class="result-score-section">
+                            <!-- Circular Score Progress -->
+                            <div class="score-radial">
+                                <svg class="progress-ring-svg" width="200" height="200">
+                                    <circle class="progress-ring-circle-bg" stroke="rgba(255, 255, 255, 0.05)" stroke-width="12" fill="transparent" r="85" cx="100" cy="100"/>
+                                    <circle class="progress-ring-circle" id="scoreCircle" stroke="url(#scoreGradient)" stroke-width="14" stroke-linecap="round" fill="transparent" r="85" cx="100" cy="100"/>
+                                    <defs>
+                                        <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#8b5cf6" id="gradStop1" />
+                                            <stop offset="100%" stop-color="#06b6d4" id="gradStop2" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                <div class="score-display">
+                                    <span class="score-number" id="scoreVal">0.0</span>
+                                    <span class="score-max">/ 10</span>
+                                </div>
+                            </div>
+
+                            <div class="result-assessment">
+                                <div class="status-badge" id="statusBadge">Checking...</div>
+                                <h3 class="assessment-title" id="assessmentTitle">Analyzing...</h3>
+                                <p class="assessment-desc" id="assessmentDesc">Loading your personalized analysis description...</p>
+                            </div>
+                        </div>
+
+                        <!-- Recommendations Card -->
+                        <div class="recommendations-box">
+                            <h4><i class="fa-solid fa-lightbulb text-accent"></i> Key Well-being Insights</h4>
+                            <ul class="recommendation-list" id="recommendationList">
+                                <li>Loading suggestions...</li>
+                            </ul>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="result-actions">
+                            <button type="button" class="btn btn-secondary" id="btnRestart">
+                                <i class="fa-solid fa-repeat"></i> New Analysis
+                            </button>
+                            <button type="button" class="btn btn-primary" id="btnShare">
+                                <i class="fa-solid fa-arrow-up-from-bracket"></i> Share Results
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 SentiMind AI. For informational purposes only. Not a medical substitute.</p>
+        </footer>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="fa-solid fa-circle-check toast-icon" id="toastIcon"></i>
+            <div class="toast-message">
+                <span class="toast-text-title" id="toastTitle">Success</span>
+                <span class="toast-text-body" id="toastBody">Action completed successfully.</span>
+            </div>
+        </div>
+        <button class="toast-close" id="toastClose"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- JavaScript code -->
+    <script src="script.js"></script>
+</body>
+</html>
