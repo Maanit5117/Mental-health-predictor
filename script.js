@@ -5,8 +5,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // API Endpoint Detection
     const getApiUrl = () => {
-        // If frontend is served on a different port/protocol from the backend (localhost:8001)
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        // If running from local file protocol or served on a different port than the backend
+        if (window.location.protocol === 'file:' || 
+            window.location.hostname === 'localhost' || 
+            window.location.hostname === '127.0.0.1') {
             if (window.location.port !== '8001') {
                 return 'http://127.0.0.1:8001/predict';
             }
@@ -488,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 apiLoader.classList.add('hidden');
                 errorMessage.textContent = error.message.includes('Failed to fetch') 
-                    ? 'Failed to connect to the prediction server. Please verify that the backend is running locally at http://localhost:8000'
+                    ? 'Failed to connect to the prediction server. Please verify that the backend is running locally at http://127.0.0.1:8001'
                     : `Error: ${error.message}`;
                 apiErrorCard.classList.remove('hidden');
                 showToast('Inference Error', 'SentiMind failed to compute the prediction score.', false);
