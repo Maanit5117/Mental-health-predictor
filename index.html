@@ -481,6 +481,8 @@
                 <a href="#" id="aboutLink" aria-haspopup="dialog">About SentiMind</a>
                 <span class="footer-dot">•</span>
                 <a href="#" id="privacyLink" aria-haspopup="dialog">Your Privacy</a>
+                <span class="footer-dot">•</span>
+                <a href="#" id="creatorLink" aria-haspopup="dialog">A Note from Maanit</a>
             </div>
             <p class="footer-copy">&copy; 2026 SentiMind. Created for mindful reflection. Your data is private.</p>
         </footer>
@@ -518,6 +520,20 @@
                     <li><strong>Session-Only:</strong> Inputs exist purely inside temporary browser variables to make the prediction request, and disappear the moment you refresh or close the page.</li>
                     <li><strong>Local Server:</strong> The prediction calculations run locally on your own system. No third-party servers ever read your inputs.</li>
                 </ul>
+            </div>
+            <button class="btn btn-secondary close-modal" aria-label="Close dialog">Close Dialog</button>
+        </div>
+    </div>
+
+    <!-- CREATOR DIALOG MODAL -->
+    <div id="creatorModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="creatorTitle">
+        <div class="modal-card">
+            <h3 id="creatorTitle" class="modal-title">A Message from Maanit</h3>
+            <div class="modal-body">
+                <p>Hello, and thank you for taking the time to explore SentiMind.</p>
+                <p>I created this application to offer a gentle, reflective companion for assessing our digital relationships. Technology has a massive impact on our daily lives, and I hope this space offers you some useful perspective on your routine.</p>
+                <p>Be gentle with yourself, and take care.</p>
+                <p style="font-weight: 700; color: var(--terracotta-dark);">— Maanit</p>
             </div>
             <button class="btn btn-secondary close-modal" aria-label="Close dialog">Close Dialog</button>
         </div>

@@ -580,11 +580,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Modal triggers for About and Privacy
+    // Modal triggers for About, Privacy, and Creator Note
     const aboutLink = document.getElementById('aboutLink');
     const privacyLink = document.getElementById('privacyLink');
+    const creatorLink = document.getElementById('creatorLink');
     const aboutModal = document.getElementById('aboutModal');
     const privacyModal = document.getElementById('privacyModal');
+    const creatorModal = document.getElementById('creatorModal');
     const closeModals = document.querySelectorAll('.close-modal');
 
     if (aboutLink && aboutModal) {
@@ -601,10 +603,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    if (creatorLink && creatorModal) {
+        creatorLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            creatorModal.classList.remove('hidden');
+        });
+    }
+
     closeModals.forEach(btn => {
         btn.addEventListener('click', () => {
             if (aboutModal) aboutModal.classList.add('hidden');
             if (privacyModal) privacyModal.classList.add('hidden');
+            if (creatorModal) creatorModal.classList.add('hidden');
         });
     });
 
