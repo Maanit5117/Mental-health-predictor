@@ -6,9 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // API Endpoint Detection
     const getApiUrls = () => {
         return [
-            'https://mental-health-predictor-1-j81o.onrender.com/predict',
-            'http://127.0.0.1:8000/predict',
-            'http://127.0.0.1:8001/predict'
+            'https://mental-health-predictor-1-j81o.onrender.com/predict'
         ];
     };
 
