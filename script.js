@@ -639,6 +639,16 @@ document.addEventListener('DOMContentLoaded', () => {
         toast.classList.remove('show');
     });
 
+    // Close modals when clicking the overlay background
+    const modals = document.querySelectorAll('.modal-overlay');
+    modals.forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    });
+
     // Initialize with Step 1
     setStep(1);
 });
